@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { bool, func } from "prop-types";
+import { bool, func, shape } from "prop-types";
 
-import { v4 as uuid } from "uuid";
 import ReactModal from "react-modal";
 import { X } from "react-feather";
 import Select from "react-select";
 import toast from "react-hot-toast";
 
 import { STATUSES } from "@/constants";
+import { updateTask } from "@/store/taskSlice";
 import { users } from "@/api";
-import { addTask } from "@/store/taskSlice";
 
 const customStyles = {
   overlay: {
@@ -36,28 +35,34 @@ const assigneesOptions = users.map((user) => ({
   value: user.id,
 }));
 
-const AddTaskModal = ({ isOpen, closeModal }) => {
+const EditTaskModal = ({ isOpen, closeModal, data }) => {
   const dispatch = useDispatch();
 
   const [selectedAssignees, setSelectedAssignees] = useState([]);
 
+  useEffect(() => {
+    const { assignees } = data;
+    const _selectedAssignees = assignees.map((assignee) => ({
+      value: assignee.id,
+      label: assignee.name,
+    }));
+    setSelectedAssignees(_selectedAssignees);
+  }, [data]);
+
   const handleSubmit = (formData) => {
     const formDataEntries = Object.fromEntries(formData);
     const payload = {
+      ...data,
       ...formDataEntries,
       assignees: selectedAssignees.map((item) => ({
         id: item.value,
         name: item.label,
       })),
-      owner: {
-        id: 1,
-        name: "John Doe",
-      },
     };
     try {
-      dispatch(addTask(payload));
+      dispatch(updateTask(payload));
       closeModal();
-      toast.success("Task added successfully!");
+      toast.success("Task updated successfully!");
       setSelectedAssignees([]);
     } catch (err) {
       console.log(err);
@@ -69,13 +74,12 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
     <ReactModal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      contentLabel="Add Task"
+      contentLabel="Edit Task"
       style={customStyles}
     >
       <form action={handleSubmit}>
-        <input type="hidden" name="id" defaultValue={uuid()} />
         <div className="border-b border-gray-200 p-4 flex items-center justify-between">
-          <h2>Add Task</h2>
+          <h2>Edit Task</h2>
           <button type="button" className="cursor-pointer" onClick={closeModal}>
             <X />
           </button>
@@ -88,6 +92,7 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
             <input
               id="title"
               name="title"
+              defaultValue={data.title}
               className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               required
             />
@@ -99,6 +104,7 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
             <textarea
               id="desc"
               name="desc"
+              defaultValue={data.desc}
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               required
@@ -114,6 +120,7 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
             <select
               id="status"
               name="status"
+              defaultValue={data.status}
               className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             >
               {Object.values(STATUSES).map((status, i) => (
@@ -159,9 +166,10 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
   );
 };
 
-AddTaskModal.propTypes = {
+EditTaskModal.propTypes = {
   isOpen: bool,
   closeModal: func,
+  data: shape({}),
 };
 
-export default AddTaskModal;
+export default EditTaskModal;
