@@ -1,4 +1,5 @@
 import { User } from "react-feather";
+import { Toaster } from "react-hot-toast";
 import Tasks from "@/components/Tasks";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <span>© 2025 | Developed with love!</span>
         </div>
       </footer>
+      <Toaster />
     </>
   );
 }
