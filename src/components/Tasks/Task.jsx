@@ -4,13 +4,13 @@ import { getAvatar, truncate } from "@/utils";
 import { useMemo } from "react";
 
 const Task = ({ data }) => {
-  const users = useMemo(() => {
-    const newUsers = [...data.users];
+  const assignees = useMemo(() => {
+    const _assignees = [...data.assignees];
     return {
-      totalCount: newUsers.length,
-      sliced: newUsers.slice(0, 3),
+      count: _assignees.length,
+      sliced: _assignees.slice(0, 3),
     };
-  }, [data.users]);
+  }, [data.assignees]);
 
   const renderStatus = (status) => {
     const mixinStyles = "h-2.5 w-2.5 rounded-full me-2";
@@ -19,21 +19,23 @@ const Task = ({ data }) => {
         return (
           <>
             <div className={`${mixinStyles} bg-green-500`} />
-            <span>{STATUSES.COMPLETED.pretty}</span>
+            <span className="text-green-500">{STATUSES.COMPLETED.pretty}</span>
           </>
         );
       case STATUSES.UNCOMPLETED.id:
         return (
           <>
             <div className={`${mixinStyles} bg-red-500`} />
-            <span>{STATUSES.UNCOMPLETED.pretty}</span>
+            <span className="text-red-500">{STATUSES.UNCOMPLETED.pretty}</span>
           </>
         );
       case STATUSES.INPROGRESS.id:
         return (
           <>
             <div className={`${mixinStyles} bg-yellow-500`} />
-            <span>{STATUSES.INPROGRESS.pretty}</span>
+            <span className="text-yellow-500">
+              {STATUSES.INPROGRESS.pretty}
+            </span>
           </>
         );
 
@@ -45,7 +47,7 @@ const Task = ({ data }) => {
   return (
     <tr
       key={data.id}
-      className="bg-white border-b border-gray-300 hover:bg-gray-50"
+      className="bg-white border-b border-gray-200 hover:bg-gray-50"
     >
       <th
         scope="row"
@@ -63,7 +65,18 @@ const Task = ({ data }) => {
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center z-10 relative">
-          {users.sliced.map((user, i) => (
+          <img
+            key={data.owner.id}
+            className="w-10 h-10 rounded-full bg-orange-400 border-2 border-white relative -mr-3"
+            src={getAvatar(data.owner.id)}
+            alt={data.owner.name}
+            title={data.owner.name}
+          />
+        </div>
+      </td>
+      <td className="px-6 py-4">
+        <div className="flex items-center z-10 relative">
+          {assignees.sliced.map((user, i) => (
             <img
               key={user.id}
               className="w-10 h-10 rounded-full bg-orange-400 border-2 border-white relative -mr-3"
@@ -73,12 +86,12 @@ const Task = ({ data }) => {
               title={user.name}
             />
           ))}
-          {users.totalCount > 3 && (
+          {assignees.count > 3 && (
             <div
               className="w-10 h-10 rounded-full bg-orange-400 border-2 border-white relative flex items-center pl-2.5 text-white font-semibold"
-              style={{ zIndex: -users.totalCount }}
+              style={{ zIndex: -assignees.count }}
             >
-              {`+${users.totalCount - 3}`}
+              {`+${assignees.count - 3}`}
             </div>
           )}
         </div>
@@ -98,7 +111,7 @@ Task.propTypes = {
     title: string,
     desc: string,
     status: oneOf(Object.values(STATUSES).map((_) => _.id)),
-    users: array,
+    assignees: array,
   }),
 };
 

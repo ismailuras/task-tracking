@@ -1,8 +1,4 @@
 export const STATUSES = {
-  COMPLETED: {
-    id: "completed",
-    pretty: "Completed",
-  },
   UNCOMPLETED: {
     id: "uncompleted",
     pretty: "Uncompleted",
@@ -10,6 +6,10 @@ export const STATUSES = {
   INPROGRESS: {
     id: "inProgress",
     pretty: "In progress",
+  },
+  COMPLETED: {
+    id: "completed",
+    pretty: "Completed",
   },
 };
 
