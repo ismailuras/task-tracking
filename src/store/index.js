@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // ✅ Local Storage için
-import taskReducer from "@/store/taskSlice"; // ✅ Doğru import
+import storage from "redux-persist/lib/storage";
+import taskReducer from "@/store/taskSlice";
 
 const persistConfig = {
   key: "tasks",
