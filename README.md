@@ -33,7 +33,7 @@ A simple task management application for tracking tasks within a team. Users can
    ```
 3. Start the project:
    ```sh
-   npm start
+   npm run dev
    ```
 
 ## Usage
