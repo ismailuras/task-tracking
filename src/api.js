@@ -5,19 +5,22 @@ export const users = [
     id: 1,
     name: "John Doe",
     role: ROLES.ADMIN,
-    tckn: 12406352362,
+    tckn: "12406352362",
+    password: "111",
   },
   {
     id: 2,
     name: "Tom Doe",
     role: ROLES.REGULAR,
-    tckn: 54807902982,
+    tckn: "54807902982",
+    password: "222",
   },
   {
     id: 3,
     name: "Jessy Doe",
     role: ROLES.REGULAR,
-    tckn: 80958926614,
+    tckn: "80958926614",
+    password: "333",
   },
 ];
 

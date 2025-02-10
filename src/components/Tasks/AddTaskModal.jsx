@@ -37,6 +37,7 @@ const assigneesOptions = users.map((user) => ({
 }));
 
 const AddTaskModal = ({ isOpen, closeModal }) => {
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   const dispatch = useDispatch();
 
   const [selectedAssignees, setSelectedAssignees] = useState([]);
@@ -49,10 +50,7 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
         id: item.value,
         name: item.label,
       })),
-      owner: {
-        id: 1,
-        name: "John Doe",
-      },
+      owner: loggedInUser,
     };
     try {
       dispatch(addTask(payload));
@@ -88,7 +86,7 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
             <input
               id="title"
               name="title"
-              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:outline-orange-400"
               required
             />
           </div>
@@ -100,7 +98,7 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
               id="desc"
               name="desc"
               rows="4"
-              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:outline-orange-400"
               required
             />
           </div>
@@ -114,7 +112,7 @@ const AddTaskModal = ({ isOpen, closeModal }) => {
             <select
               id="status"
               name="status"
-              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:outline-orange-400"
             >
               {Object.values(STATUSES).map((status, i) => (
                 <option key={i} value={status.id}>
