@@ -1,7 +1,7 @@
 import { array, number, oneOf, shape, string } from "prop-types";
 import { Edit2, Trash2 } from "react-feather";
 import { STATUSES } from "@/constants";
-import { getAvatar, truncate } from "@/utils";
+import { getAvatar, taskActionPermissionCheck, truncate } from "@/utils";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeTask } from "@/store/taskSlice";
@@ -120,20 +120,24 @@ const Task = ({ data }) => {
         </td>
         <td className="px-6 py-4">
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setEditModalOpen(true)}
-              className="w-7 h-7  bg-indigo-50 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500  hover:bg-indigo-100"
-            >
-              <Edit2 size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsDialogOpen(true)}
-              className="w-7 h-7  bg-indigo-50 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500  hover:bg-indigo-100"
-            >
-              <Trash2 size={18} />
-            </button>
+            {taskActionPermissionCheck(data.owner.id) ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setEditModalOpen(true)}
+                  className="w-7 h-7  bg-indigo-50 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500  hover:bg-indigo-100"
+                >
+                  <Edit2 size={18} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsDialogOpen(true)}
+                  className="w-7 h-7  bg-indigo-50 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500  hover:bg-indigo-100"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </>
+            ) : null}
           </div>
         </td>
       </tr>

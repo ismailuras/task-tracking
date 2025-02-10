@@ -93,7 +93,7 @@ const EditTaskModal = ({ isOpen, closeModal, data }) => {
               id="title"
               name="title"
               defaultValue={data.title}
-              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:outline-orange-400"
               required
             />
           </div>
@@ -106,7 +106,7 @@ const EditTaskModal = ({ isOpen, closeModal, data }) => {
               name="desc"
               defaultValue={data.desc}
               rows="4"
-              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:outline-orange-400"
               required
             />
           </div>
@@ -121,7 +121,7 @@ const EditTaskModal = ({ isOpen, closeModal, data }) => {
               id="status"
               name="status"
               defaultValue={data.status}
-              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:outline-orange-400"
             >
               {Object.values(STATUSES).map((status, i) => (
                 <option key={i} value={status.id}>
