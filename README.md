@@ -50,3 +50,5 @@ A simple task management application for tracking tasks within a team. Users can
 - **Tailwind CSS**
 - **Local Storage**
 - **Node.js**
+
+[Deploy URL](https://task-tracking-nine.vercel.app/login)
